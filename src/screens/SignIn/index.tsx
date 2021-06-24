@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/core';
 import { 
     Text, 
     View, 
@@ -13,14 +14,14 @@ import IllustrationImg from '../../assets/illustration.png';
 import { styles } from './styles';
 
 export function SignIn(){
+    const navigation = useNavigation();
+
+    function handleSignIn(){
+        navigation.navigate('Home');
+    }
+
     return (
         <View style={styles.container}>
-            <StatusBar 
-                barStyle="light-content"
-                backgroundColor="transparent"
-                translucent
-            />
-
             <Image 
                 source={IllustrationImg} 
                 style={styles.image} 
@@ -41,7 +42,7 @@ export function SignIn(){
 
                 <ButtonIcon 
                     title="Entrar com Discord"
-                    activeOpacity={0.75}
+                    onPress={handleSignIn}
                 />
             </View>
 
