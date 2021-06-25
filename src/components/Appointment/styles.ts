@@ -36,7 +36,7 @@ export const styles = StyleSheet.create({
         width: '100%',
         flexDirection: "row",
         justifyContent: 'space-between',
-        marginTop: 15
+        marginTop: 5
     },
 
     dateInfo: {
