@@ -17,6 +17,30 @@ export function Guilds({handleGuildSelect}: GuildsProps){
             icon: 'image.png',
             name: "Lendários",
             owner: true
+        },
+        {
+            id: "2",
+            icon: 'image.png',
+            name: "Lendários",
+            owner: true
+        },
+        {
+            id: "3",
+            icon: 'image.png',
+            name: "Lendários",
+            owner: true
+        },
+        {
+            id: "4",
+            icon: 'image.png',
+            name: "Lendários",
+            owner: true
+        },
+        {
+            id: "5",
+            icon: 'image.png',
+            name: "Lendários",
+            owner: true
         }
     ];
 
@@ -33,6 +57,7 @@ export function Guilds({handleGuildSelect}: GuildsProps){
                 )}
                 ItemSeparatorComponent={() => <ListDivider />}
                 showsVerticalScrollIndicator={false}
+                contentContainerStyle={{paddingBottom: 30}}
                 style={styles.guilds}
             />
         </View>
