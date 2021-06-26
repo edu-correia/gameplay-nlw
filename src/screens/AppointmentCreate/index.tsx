@@ -57,7 +57,7 @@ export function AppointmentCreate() {
     async function handleSaveAppointment(){
         const newAppointment = {
             id: uuid.v4(),
-            selectedGuild,
+            guild: selectedGuild,
             category,
             description,
             date: `${day}/${month} às ${hour}:${minute}h`

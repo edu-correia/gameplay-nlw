@@ -7,22 +7,16 @@ import { categories } from "../../utils/categories";
 import { GuildIcon } from "../GuildIcon";
 
 import { styles } from "./styles";
+import { GuildDataProps } from "../Guild";
 
 import PlayerSvg from '../../assets/player.svg';
 import CalendarSvg from '../../assets/calendar.svg';
 
 import { theme } from "../../global/styles/theme";
 
-export interface GuildProps{
-    owner: boolean;
-    id: string;
-    name: string;
-    icon: null;
-}
-
 export interface AppointmentProps{
     id: string;
-    guild: GuildProps;
+    guild: GuildDataProps;
     category: string;
     date: string;
     description: string;
@@ -34,13 +28,16 @@ interface Props extends RectButtonProps{
 
 export function Appointment({data, ...rest}: Props){
     const [category] = categories.filter(item => item.id === data.category);
-    const { owner } = data.guild;
+    const owner = data.guild.owner;
     const {primary, on} = theme.colors;
 
     return (
         <RectButton {...rest}>
             <View style={styles.container}>
-                <GuildIcon />
+                <GuildIcon 
+                    guildId={data.guild.id}
+                    iconId={data.guild.icon}
+                />
 
                 <View style={styles.content}>
                     <View style={styles.header}>
