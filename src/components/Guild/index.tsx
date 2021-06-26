@@ -30,19 +30,22 @@ export function Guild({data, ...rest}: GuildProps){
             activeOpacity={0.7}
             {...rest}
         >
-           <GuildIcon />
+            <GuildIcon 
+                guildId={data.id}
+                iconId={data.icon}
+            />
 
-           <View style={styles.content}>
-               <View>
-                   <Text style={styles.title}>
-                       {data.name}
-                   </Text>
+            <View style={styles.content}>
+                <View>
+                    <Text style={styles.title}>
+                        {data.name}
+                    </Text>
 
-                   <Text style={styles.type}>
-                       {data.owner ? "Administrador" : "Convidado"}
-                   </Text>
-               </View>
-           </View>
+                    <Text style={styles.type}>
+                        {data.owner ? "Administrador" : "Convidado"}
+                    </Text>
+                </View>
+            </View>
 
             <Feather 
                 name="chevron-right"
