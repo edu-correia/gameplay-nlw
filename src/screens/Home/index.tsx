@@ -26,7 +26,7 @@ export function Home(){
     const [appointments, setAppointments] = useState<AppointmentProps[]>([]);
     const [category, setCategory] = useState('');
     const [loading, setLoading] = useState(true);
-    const [isSettingsOpen, setIsSettingsOpen] = useState(true);
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
     const navigation = useNavigation();
 
@@ -54,8 +54,6 @@ export function Home(){
         }
 
         setLoading(false);
-
-        console.log(previousAppointments);
     }
 
     function handleToggleSettings(){

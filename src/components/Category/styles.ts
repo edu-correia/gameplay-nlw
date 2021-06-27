@@ -48,5 +48,10 @@ export const styles = StyleSheet.create({
         height: 10,
         backgroundColor: theme.colors.primary,
         borderRadius: 3
+    },
+    
+    image: {
+        width: 48,
+        height:48
     }
 })

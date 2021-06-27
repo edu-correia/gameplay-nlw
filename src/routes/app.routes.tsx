@@ -7,6 +7,7 @@ import { AppointmentDetails } from "../screens/AppointmentDetails";
 import { AppointmentCreate } from "../screens/AppointmentCreate";
 
 import { theme } from "../global/styles/theme";
+import { CategoryCreate } from "../screens/CategoryCreate";
 
 const {
     Navigator,
@@ -34,6 +35,10 @@ export function AppRoutes(){
             <Screen 
                 name="AppointmentCreate"
                 component={AppointmentCreate}
+            />
+            <Screen 
+                name="CategoryCreate"
+                component={CategoryCreate}
             />
         </Navigator>
     )
