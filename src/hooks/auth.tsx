@@ -65,6 +65,7 @@ function AuthProvider({children}: AuthProviderProps){
                 api.defaults.headers.authorization = `Bearer ${params.access_token}`;
 
                 const userInfo = await api.get('/users/@me');
+                console.log(userInfo.data);
 
                 const [firstName] = userInfo.data.username.split(' ');
                 userInfo.data.avatar = `${CDN_IMAGE}/avatars/${userInfo.data.id}/${userInfo.data.avatar}.png`;
@@ -87,9 +88,8 @@ function AuthProvider({children}: AuthProviderProps){
     }
 
     async function signOut(){
-        setUser({} as UserProps);
-
         await AsyncStorage.removeItem(COLLECTION_USERS);
+        setUser({} as UserProps);
     }
 
     async function loadUserStorageData(){

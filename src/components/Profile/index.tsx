@@ -9,32 +9,13 @@ import { Avatar } from "../Avatar";
 import { styles } from "./styles";
 
 export function Profile(){
-    const { user, signOut } = useAuth();
-
-    function handleSignOut(){
-        Alert.alert(
-            'Logout', 
-            'Deseja sair do GamPlay?', 
-            [
-                {
-                    text: 'Não',
-                    style: "cancel"
-                },
-                {
-                    text: 'Sim',
-                    onPress: () => signOut()
-                }
-            ]
-        );
-    }
+    const { user } = useAuth();
 
     return (
         <View style={styles.container}>
-            <RectButton onPress={handleSignOut}>
-                <Avatar 
-                    urlImage={user.avatar}
-                />
-            </RectButton>
+            <Avatar 
+                urlImage={user.avatar}
+            />
 
             <View>
                 <View style={styles.user}>

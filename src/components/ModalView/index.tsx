@@ -4,8 +4,10 @@ import {
     Modal, 
     View,
     ModalProps,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    Dimensions
  } from 'react-native';
+import { RectButton } from 'react-native-gesture-handler';
 import { Background } from '../Background';
 
 import {styles} from './styles';  
@@ -13,9 +15,10 @@ import {styles} from './styles';
 interface ModalViewProps extends ModalProps{
     children: ReactNode;
     closeModal: () => void;
+    height: number;
 }
 
-export function ModalView({children, closeModal, ...rest}: ModalViewProps){
+export function ModalView({children, closeModal, height, ...rest}: ModalViewProps){
     return (
         <Modal
             transparent
@@ -25,10 +28,13 @@ export function ModalView({children, closeModal, ...rest}: ModalViewProps){
         >
             <TouchableWithoutFeedback onPress={closeModal}>
                 <View style={styles.overlay}>
-                    <View style={styles.container}>
+                    <View style={[
+                        styles.container,
+                        {marginTop: Dimensions.get('window').height - height}
+                    ]}>
                         <Background>
                             <View style={styles.bar} />
-
+                                
                             {children}
                         </Background>
                     </View>

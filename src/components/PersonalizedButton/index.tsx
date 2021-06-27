@@ -5,14 +5,22 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { styles } from "./styles";
 import { theme } from "../../global/styles/theme";
 
-export function ButtonAdd({...rest}: RectButtonProps){
+interface PersonalizedButtonProps extends RectButtonProps{
+    iconName: any;
+    borderRadius: number;
+}
+
+export function PersonalizedButton({iconName, borderRadius, ...rest}: PersonalizedButtonProps){
     return (
         <RectButton
-            style={styles.container}
+            style={[
+                styles.container,
+                {borderRadius}
+            ]}
             {...rest}
         >
             <MaterialCommunityIcons 
-                name="plus"
+                name={iconName}
                 color={theme.colors.heading}
                 size={24}
             />

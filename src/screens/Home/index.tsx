@@ -1,25 +1,32 @@
 import React, { useState, useCallback } from "react";
-import { View, FlatList, Text } from "react-native";
+import { View, FlatList, Text, Alert, TouchableOpacity } from "react-native";
+import { RectButton } from "react-native-gesture-handler";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Profile } from "../../components/Profile";
-import { ButtonAdd } from "../../components/ButtonAdd";
+import { PersonalizedButton } from "../../components/PersonalizedButton";
 import { CategorySelect } from "../../components/CategorySelect";
 import { ListHeader } from "../../components/ListHeader";
 import { Appointment, AppointmentProps } from "../../components/Appointment";
 import { ListDivider } from "../../components/ListDivider";
 import { Background } from '../../components/Background';
 import { Loading } from '../../components/Loading';
+import { ModalView } from "../../components/ModalView";
+
+import { useAuth } from "../../hooks/auth";
 
 import { COLLECTION_APPOINTMENTS } from "../../configs/database";
 
 import { styles } from "./styles";
+import { theme } from "../../global/styles/theme";
 
 export function Home(){
+    const {signOut} = useAuth();
     const [appointments, setAppointments] = useState<AppointmentProps[]>([]);
     const [category, setCategory] = useState('');
     const [loading, setLoading] = useState(true);
+    const [isSettingsOpen, setIsSettingsOpen] = useState(true);
 
     const navigation = useNavigation();
 
@@ -51,6 +58,47 @@ export function Home(){
         console.log(previousAppointments);
     }
 
+    function handleToggleSettings(){
+        setIsSettingsOpen(!isSettingsOpen);
+    }
+
+    async function handleDeleteAllAppointments(){
+        Alert.alert(
+            'Excluir partidas', 
+            'Tem certeza que deseja apagar todos agendamentos?', 
+            [
+                {
+                    text: 'Não',
+                    style: "cancel"
+                },
+                {
+                    text: 'Sim',
+                    onPress: async () => {
+                        await AsyncStorage.removeItem(COLLECTION_APPOINTMENTS);
+                    }
+                }
+            ]
+        );
+
+    }
+
+    function handleSignOut(){
+        Alert.alert(
+            'Logout', 
+            'Deseja sair do GamePlay?', 
+            [
+                {
+                    text: 'Não',
+                    style: "cancel"
+                },
+                {
+                    text: 'Sim',
+                    onPress: () => signOut()
+                }
+            ]
+        );
+    }
+
     useFocusEffect(useCallback(() => {
         loadAppointments();
     }, [category]));
@@ -59,8 +107,10 @@ export function Home(){
         <Background>
                 <View style={styles.header}>
                     <Profile />
-                    <ButtonAdd 
-                        onPress={handleAppointmentCreate} 
+                    <PersonalizedButton 
+                        onPress={handleToggleSettings} 
+                        borderRadius={50}
+                        iconName="cog"
                     />
                 </View>
 
@@ -68,8 +118,6 @@ export function Home(){
                         categorySelected={category}
                         setCategory={handleCategorySelect}
                     />
-
-                    
 
                     {
                         loading ? (
@@ -98,6 +146,37 @@ export function Home(){
                             </>
                         )
                     }
+
+                    <View style={styles.addButton}>
+                        <PersonalizedButton 
+                            onPress={handleAppointmentCreate} 
+                            borderRadius={8}
+                            iconName="plus"
+                        />
+                    </View>
+
+                    <ModalView 
+                        visible={isSettingsOpen} 
+                        closeModal={handleToggleSettings}
+                        height={200}
+                    >
+                        <TouchableOpacity 
+                            style={styles.settingsBtn} 
+                            onPress={handleDeleteAllAppointments}
+                        >
+                            <Text style={styles.settingsBtnText}>
+                                Limpar partidas
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity 
+                            style={styles.settingsBtn} 
+                            onPress={handleSignOut}
+                        >
+                            <Text style={[styles.settingsBtnText, {color: theme.colors.primary}]}>
+                                Sair
+                            </Text>
+                        </TouchableOpacity>
+                    </ModalView>
         </Background>
     )
 }
